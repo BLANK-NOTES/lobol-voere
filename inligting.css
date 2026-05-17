@@ -1,0 +1,38 @@
+/* ═══ INLIGTING / LIBRARY ═══ */
+.info-hero{background:linear-gradient(135deg,var(--adim),var(--bg3));border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;text-align:center}
+.info-hero-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent);margin-bottom:4px}
+.info-hero-sub{font-size:13px;color:var(--text3)}
+.info-categories{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+@media(min-width:600px){.info-categories{grid-template-columns:repeat(3,1fr)}}
+.info-cat-btn{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:16px 12px;cursor:pointer;text-align:center;transition:all .2s;font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;align-items:center;gap:8px}
+.info-cat-btn:hover,.info-cat-btn.active{border-color:var(--accent);background:var(--adim)}
+.info-cat-icon{font-size:32px}
+.info-cat-label{font-weight:700;font-size:13px;color:var(--text2)}
+.info-cat-btn.active .info-cat-label{color:var(--accent)}
+.info-content{display:none}
+.info-content.active{display:block}
+.info-section{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.info-section-header{display:flex;align-items:center;gap:10px;padding:14px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.info-section-icon{font-size:20px;width:36px;text-align:center}
+.info-section-title{font-weight:700;font-size:15px;flex:1;font-family:'Syne',sans-serif}
+.info-section-body{padding:0 14px 14px;border-top:1px solid var(--border)}
+.info-block{margin-top:12px}
+.info-block-title{font-weight:700;font-size:13px;color:var(--accent);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.info-block-title::before{content:'';display:inline-block;width:3px;height:14px;background:var(--accent);border-radius:2px}
+.info-list{list-style:none;display:flex;flex-direction:column;gap:5px}
+.info-list li{font-size:13px;color:var(--text2);padding:6px 10px;background:var(--bg3);border-radius:6px;line-height:1.5}
+.info-list li strong{color:var(--text);font-weight:600}
+.info-table-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--border);margin-top:8px}
+.info-table{width:100%;border-collapse:collapse;font-size:13px;font-family:'DM Sans',sans-serif}
+.info-table th{background:var(--bg3);padding:8px 12px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3)}
+.info-table td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text2)}
+.info-table tr:last-child td{border-bottom:none}
+.info-table tr:hover td{background:var(--bg3)}
+.info-highlight{background:var(--adim);border:1px solid var(--accent);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--accent);font-weight:600;margin-top:8px}
+.info-warning{background:var(--odim);border:1px solid var(--orange);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--orange);font-weight:600;margin-top:8px}
+.info-danger{background:var(--rdim);border:1px solid var(--red);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--red);font-weight:600;margin-top:8px}
+.krediet-form{display:flex;flex-direction:column;gap:10px}
+.krediet-field{display:flex;flex-direction:column;gap:4px}
+.krediet-field label{font-size:12px;color:var(--text3);font-weight:600}
+.krediet-submit-row{display:flex;gap:8px;margin-top:4px}
+.lobol515-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--accent),#4aaa24);color:#0f1f0f;font-weight:800;font-size:18px;font-family:'Syne',sans-serif;padding:10px 20px;border-radius:99px;margin-bottom:12px}

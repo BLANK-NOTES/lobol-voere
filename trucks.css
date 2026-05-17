@@ -1,0 +1,420 @@
+/* ═══ TRUCK VISUAL SYSTEM ═══ */
+.truck-profile-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px}
+.truck-profile-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.truck-profile-name{font-family:'Syne',sans-serif;font-weight:800;font-size:18px}
+.truck-profile-driver{font-size:12px;color:var(--text3);margin-top:2px}
+.truck-capacity-row{display:flex;gap:10px;margin-bottom:12px}
+.truck-cap-box{flex:1;background:var(--bg3);border-radius:10px;padding:10px;text-align:center}
+.truck-cap-val{font-size:22px;font-weight:800;font-family:'Syne',sans-serif;display:block}
+.truck-cap-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+
+/* Visual truck SVG wrapper */
+.truck-visual-wrap{background:var(--bg2);border-radius:12px;padding:14px;margin-bottom:12px;position:relative;overflow:hidden}
+.truck-visual-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:10px;display:flex;justify-content:space-between}
+.truck-svg-area{display:flex;gap:12px;align-items:flex-end}
+.truck-svg-unit{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.truck-svg-label{font-size:11px;color:var(--text2);font-weight:600}
+.truck-svg-sub{font-size:10px;color:var(--text3)}
+
+/* Bag grid inside truck */
+.bag-grid-wrap{position:relative;width:100%}
+.bag-grid{display:grid;gap:2px;width:100%;border-radius:6px;overflow:hidden;min-height:40px}
+.bag-cell{border-radius:2px;transition:background .3s}
+.bag-cell.filled{background:var(--accent)}
+.bag-cell.empty{background:var(--bg3);border:1px solid var(--border)}
+.bag-cell.over{background:var(--red)}
+
+/* Truck body SVG */
+.truck-body-svg{width:100%;max-height:80px}
+.trailer-body-svg{width:100%;max-height:80px}
+
+/* Fill bar */
+.fill-bar-wrap{width:100%;background:var(--bg3);border-radius:99px;height:12px;overflow:hidden;margin-top:4px}
+.fill-bar{height:100%;border-radius:99px;transition:width .5s ease}
+.fill-bar.green{background:var(--accent)}
+.fill-bar.orange{background:var(--orange)}
+.fill-bar.red{background:var(--red)}
+
+/* truck list card upgrade */
+.truck-card-visual{display:flex;flex-direction:column;gap:4px;flex:1}
+.truck-mini-fill{height:6px;border-radius:99px;background:var(--bg3);overflow:hidden;margin-top:4px}
+.truck-mini-fill-bar{height:100%;border-radius:99px;transition:width .4s}
+
+/* Driver badges */
+.driver-badge{display:inline-flex;align-items:center;gap:5px;background:var(--adim);color:var(--accent);font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px}
+
+/* Truck fleet list */
+.truck-fleet-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.fleet-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;gap:12px;align-items:center}
+.fleet-icon{font-size:28px;width:48px;text-align:center}
+.fleet-info{flex:1}
+.fleet-name{font-weight:700;font-size:15px}
+.fleet-meta{font-size:12px;color:var(--text3);margin-top:2px}
+.fleet-caps{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+.fleet-cap-chip{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:11px;color:var(--text2)}
+
+/* Drivers section */
+.drivers-section{margin-bottom:14px}
+.driver-list{display:flex;flex-direction:column;gap:6px}
+.driver-row{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+.driver-av{width:36px;height:36px;border-radius:99px;background:var(--accent);color:#0f1f0f;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+.driver-info{flex:1}
+.driver-name{font-weight:700;font-size:14px}
+.driver-role{font-size:11px;color:var(--text3)}
+
+/* ═══════════════════════════════════════
+   PRODUCTS
+═══════════════════════════════════════ */
+.prod-list{display:flex;flex-direction:column;gap:6px}
+.prod-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
+.prod-row{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer}
+.prod-row:active{background:var(--card2)}
+.prod-name{font-weight:600;font-size:14px}
+.prod-cat{font-size:12px;color:var(--text3)}
+.prod-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.prod-price{color:var(--accent);font-weight:700;font-size:15px}
+.prod-old{text-decoration:line-through;color:var(--text3);font-size:11px}
+.prod-unit{font-size:11px;color:var(--text3)}
+.prod-detail{padding:10px 14px 14px;border-top:1px solid var(--border)}
+.use-case-tag{display:inline-flex;align-items:center;gap:5px;background:var(--adim);color:var(--accent);font-size:12px;padding:4px 10px;border-radius:99px;margin-bottom:8px}
+.prod-desc{font-size:13px;color:var(--text2);margin-bottom:8px}
+
+/* Guides */
+.guide-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:10px}
+.guide-card.open{border-color:var(--adim)}
+.guide-header{display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer;width:100%;text-align:left;background:transparent;font-family:'DM Sans',sans-serif;color:var(--text)}
+.guide-icon{font-size:24px}
+.guide-title{font-weight:700;font-size:16px;flex:1;font-family:'Syne',sans-serif}
+.guide-body{padding:0 14px 14px;border-top:1px solid var(--border)}
+.gsec{margin-top:10px}
+.gsec-btn{display:flex;align-items:flex-start;justify-content:space-between;width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;cursor:pointer;text-align:left;font-family:'DM Sans',sans-serif;color:var(--text);gap:8px}
+.gsec-head{font-weight:700;font-size:13px}
+.gsec-sub{font-size:12px;color:var(--accent);margin-top:2px}
+.gsec-body{padding:10px 4px 0;display:flex;flex-direction:column;gap:10px}
+.gitem{background:var(--bg2);border-radius:var(--radius-sm);padding:12px}
+.gitem-prod{font-weight:700;font-size:13px;color:var(--accent);margin-bottom:8px}
+.gitem-list{padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.gitem-list li{font-size:13px;color:var(--text2)}
+.guide-note{margin-top:8px;font-size:12px;color:var(--orange);background:var(--odim);border-radius:var(--radius-sm);padding:8px 12px}
+
+/* Tab row */
+.tab-row{display:flex;gap:8px;margin-bottom:14px}
+.tab-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;background:var(--bg3);border:1px solid var(--border);color:var(--text2);transition:all .15s;font-family:'DM Sans',sans-serif}
+.tab-btn.active{background:var(--accent);color:#0f1f0f;border-color:var(--accent)}
+
+/* ═══════════════════════════════════════
+   TRUCK COUNT
+═══════════════════════════════════════ */
+.truck-list{display:flex;flex-direction:column;gap:10px}
+.truck-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color .15s}
+.truck-card:hover{border-color:var(--adim)}
+.truck-icon{color:var(--accent);background:var(--adim);padding:10px;border-radius:var(--radius-sm);font-size:22px}
+.truck-info{flex:1}
+.truck-name{font-weight:700;font-size:16px;display:block}
+.truck-meta{font-size:12px;color:var(--text3)}
+.truck-val{font-size:13px;color:var(--accent);font-weight:600;display:block;margin-top:2px}
+.truck-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.sum-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center}
+.sum-label{font-size:11px;color:var(--text3)}
+.sum-val{font-size:22px;font-weight:800;font-family:'Syne',sans-serif;display:block}
+.count-list{display:flex;flex-direction:column;gap:8px}
+.count-row{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.count-info{flex:1;min-width:100px}
+.count-name{font-weight:600;font-size:14px;display:block}
+.count-sub{font-size:12px;color:var(--text3)}
+.count-controls{display:flex;align-items:center;gap:6px}
+.qty-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:var(--radius-sm);font-size:20px;font-weight:300;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:'DM Sans',sans-serif}
+.qty-input{width:60px!important;text-align:center;padding:6px 4px!important;font-size:16px;font-weight:700}
+
+/* ═══════════════════════════════════════
+   FACTORY STOCK
+═══════════════════════════════════════ */
+.stock-list{display:flex;flex-direction:column;gap:8px}
+.stock-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+.stock-card.expired{border-color:var(--rdim)}
+.stock-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.stock-name{font-weight:600;font-size:14px}
+.stock-details{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:4px}
+.detail-item{font-size:13px;color:var(--text2)}
+.detail-item strong{color:var(--text)}
+.stock-notes{font-size:12px;color:var(--text3);margin-top:4px}
+.stock-footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+.stock-updated{font-size:11px;color:var(--text3)}
+.stock-value-banner{background:var(--adim);color:var(--accent);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:10px}
+
+/* ═══════════════════════════════════════
+   DUTIES
+═══════════════════════════════════════ */
+.duties-prog{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin-bottom:14px}
+.duties-prog-text{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:8px}
+.duty-list{display:flex;flex-direction:column;gap:8px}
+.duty-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;transition:opacity .2s}
+.duty-card.done-card{opacity:.5}
+.duty-top{display:flex;align-items:flex-start;gap:12px}
+.check-box{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .15s;margin-top:1px;font-size:13px}
+.check-box.checked{background:var(--accent);border-color:var(--accent);color:#0f1f0f}
+.duty-info{flex:1}
+.duty-title-text{font-weight:600;font-size:14px;display:block;margin-bottom:4px}
+.duty-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--bg3);color:var(--text3)}
+.tag.red{background:var(--rdim);color:var(--red)}
+.tag.orange{background:var(--odim);color:var(--orange)}
+.tag.green{background:var(--adim);color:var(--accent)}
+.duty-acts{display:flex;gap:6px}
+.duty-notes{font-size:12px;color:var(--text3);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
+
+/* ═══════════════════════════════════════
+   REMINDERS
+═══════════════════════════════════════ */
+.rem-list{display:flex;flex-direction:column;gap:10px}
+.rem-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;transition:border-color .2s,opacity .2s}
+.rem-card.soon{border-color:var(--orange)}
+.rem-card.inactive{opacity:.5}
+.rem-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.rem-time-block{display:flex;align-items:center;gap:10px}
+.rem-time{font-family:'Syne',sans-serif;font-size:22px;font-weight:700}
+.rem-acts{display:flex;gap:6px}
+.rem-title{font-weight:600;font-size:15px;margin-bottom:8px}
+.rem-days{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:4px}
+.day-tag{font-size:11px;padding:2px 7px;border-radius:99px;background:var(--bg3);color:var(--text3)}
+.day-tag.active{background:var(--adim);color:var(--accent)}
+.day-tag.today{background:var(--accent);color:#0f1f0f;font-weight:700}
+.days-grid{display:flex;gap:6px;flex-wrap:wrap}
+.day-btn{padding:5px 10px;border-radius:99px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.day-btn.active{background:var(--accent);color:#0f1f0f;border-color:var(--accent);font-weight:600}
+
+/* ═══════════════════════════════════════
+   CUSTOMERS
+═══════════════════════════════════════ */
+.cust-list{display:flex;flex-direction:column;gap:8px}
+.cust-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer}
+.cust-top{display:flex;align-items:center;gap:12px;padding:14px}
+.cust-avatar{width:40px;height:40px;background:var(--adim);color:var(--accent);border-radius:99px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0}
+.cust-info{flex:1}
+.cust-name{font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px}
+.cust-farm{font-size:12px;color:var(--text3);margin-top:1px}
+.cust-type{background:var(--bg3);color:var(--text2);font-size:11px;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.cust-detail{padding:0 14px 14px;border-top:1px solid var(--border);padding-top:10px;display:flex;flex-direction:column;gap:6px}
+.detail-link{display:inline-flex;align-items:center;gap:5px;color:var(--blue);font-size:13px}
+.detail-notes{font-size:12px;color:var(--text3);padding:6px 10px;background:var(--bg3);border-radius:6px}
+.cust-detail-acts{display:flex;gap:8px;margin-top:4px}
+
+/* ═══════════════════════════════════════
+   SALES
+═══════════════════════════════════════ */
+.sales-sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.sale-list{display:flex;flex-direction:column;gap:8px}
+.sale-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.sale-head{display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer}
+.sale-info{flex:1}
+.sale-cust{font-weight:700;font-size:14px}
+.sale-date{font-size:12px;color:var(--text3);margin-top:2px}
+.sale-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.sale-amt{font-weight:700;color:var(--accent);font-size:15px}
+.sale-detail{padding:10px 14px 14px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:6px}
+.sale-detail-row{display:flex;justify-content:space-between;font-size:13px;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border)}
+.sale-acts{display:flex;gap:8px;align-items:center;margin-top:6px}
+.status-sel{width:auto!important;flex:1;padding:8px 10px!important;font-size:13px!important}
+.sale-item-row{background:var(--bg3);border-radius:8px;padding:10px;margin-bottom:4px}
+.sale-item-name{font-weight:600;font-size:13px;margin-bottom:6px;display:block}
+.sale-item-controls{display:flex;align-items:center;gap:6px}
+.sale-item-total{font-weight:700;color:var(--accent);font-size:14px;margin-left:auto}
+.sale-total-row{text-align:right;font-size:16px;color:var(--text2);padding:8px 0;border-top:1px solid var(--border)}
+.sale-total-row strong{color:var(--accent)}
+.price-hist-row{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px}
+.ph-name{font-weight:600;font-size:14px}
+.ph-change{display:flex;align-items:center;gap:8px;font-size:13px;margin:4px 0}
+.ph-old{text-decoration:line-through;color:var(--red);font-weight:600}
+.ph-new{color:var(--accent);font-weight:700}
+.ph-date{font-size:11px;color:var(--text3)}
+
+/* ═══════════════════════════════════════
+   DELIVERIES
+═══════════════════════════════════════ */
+.deliv-list{display:flex;flex-direction:column;gap:10px}
+.deliv-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.deliv-card.active-route{border-color:var(--orange)}
+.deliv-head{display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer}
+.deliv-icon{background:var(--bg3);color:var(--text2);padding:10px;border-radius:10px;font-size:20px}
+.deliv-info{flex:1}
+.deliv-truck{font-weight:700;font-size:15px}
+.deliv-meta{font-size:12px;color:var(--text3);margin-top:2px}
+.deliv-prog{height:3px;background:var(--bg3);margin:0 14px}
+.deliv-prog-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+.deliv-detail{padding:10px 14px 14px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+.deliv-stop{display:flex;align-items:flex-start;gap:10px;background:var(--bg3);border-radius:8px;padding:10px;transition:opacity .2s}
+.deliv-stop.done-stop{opacity:.5}
+.stop-seq{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3)}
+.stop-name{font-weight:600;font-size:14px;margin:2px 0 4px}
+.stop-notes-sm{font-size:12px;color:var(--text3)}
+.stop-row{display:flex;align-items:flex-start;gap:8px;background:var(--bg3);border-radius:8px;padding:10px;margin-bottom:4px}
+.stop-num{width:22px;height:22px;background:var(--accent);color:#0f1f0f;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.stop-ctrl{display:flex;gap:4px;align-items:center}
+
+/* ═══════════════════════════════════════
+   NOTES
+═══════════════════════════════════════ */
+.notes-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:400px){.notes-grid{grid-template-columns:1fr}}
+@media(min-width:700px){.notes-grid{grid-template-columns:repeat(3,1fr)}}
+.note-card{border-radius:14px;border:1px solid var(--border);padding:14px;display:flex;flex-direction:column;gap:8px}
+.note-card.pinned{border-width:2px}
+.note-default{background:var(--card)}.note-green{background:var(--adim);border-color:var(--accent)}
+.note-orange{background:var(--odim);border-color:var(--orange)}.note-blue{background:var(--bdim);border-color:var(--blue)}.note-red{background:var(--rdim);border-color:var(--red)}
+.note-top{display:flex;justify-content:space-between;align-items:flex-start}
+.note-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.note-type-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);background:var(--bg3);padding:2px 7px;border-radius:99px}
+.note-title-text{font-weight:700;font-size:15px;font-family:'Syne',sans-serif}
+.note-body-text{font-size:13px;color:var(--text2);line-height:1.55;white-space:pre-wrap;flex:1}
+.note-date-text{font-size:11px;color:var(--text3);margin-top:4px}
+.note-acts{display:flex;gap:4px}
+.color-picker-row{display:flex;gap:8px;padding:4px 0}
+.cdot{width:28px;height:28px;border-radius:99px;border:2px solid transparent;cursor:pointer;transition:transform .15s}
+.cdot.sel{border-color:var(--text);transform:scale(1.15)}
+.cdot-default{background:var(--card);border-color:var(--border)!important}
+.cdot-green{background:var(--accent)}.cdot-orange{background:var(--orange)}.cdot-blue{background:var(--blue)}.cdot-red{background:var(--red)}
+
+/* ═══════════════════════════════════════
+   WORKERS
+═══════════════════════════════════════ */
+.workers-sum{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:14px;scrollbar-width:none}
+.workers-sum::-webkit-scrollbar{display:none}
+.wpill{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:99px;padding:8px 14px 8px 8px;white-space:nowrap;flex-shrink:0}
+.wpill-av{width:28px;height:28px;border-radius:99px;background:var(--accent);color:#0f1f0f;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+.wpill-name{font-weight:700;font-size:13px}
+.wpill-prog{font-size:11px;color:var(--text3)}
+.worker-list{display:flex;flex-direction:column;gap:10px}
+.worker-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.worker-inactive{opacity:.55}
+.worker-head{display:flex;align-items:flex-start;gap:12px;padding:14px;cursor:pointer}
+.wk-av{width:46px;height:46px;border-radius:14px;background:var(--adim);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;font-family:'Syne',sans-serif;flex-shrink:0}
+.wk-info{flex:1}
+.wk-name{font-weight:700;font-size:15px}
+.wk-role{font-size:12px;color:var(--text3);margin-bottom:6px}
+.wk-bar{height:4px;background:var(--bg3);border-radius:99px;overflow:hidden;margin-bottom:3px}
+.wk-bar-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+.wk-task-lbl{font-size:11px;color:var(--text3)}
+.wk-detail{padding:10px 14px 14px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+.wk-duties-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:8px}
+.wk-duty-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.wk-duty-row:last-child{border-bottom:none}
+.wk-duty-done-row{opacity:.5}
+.small-check{width:26px;height:26px;border-radius:6px;flex-shrink:0;border:1.5px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;color:var(--text3);font-size:12px}
+.small-check.assigned{background:var(--adim);border-color:var(--accent);color:var(--accent)}
+.wk-duty-info{flex:1}
+.wk-duty-name{font-size:13px;font-weight:500;display:block}
+.wk-duty-name.dimmed{color:var(--text3)}
+.wk-duty-cat{font-size:11px;color:var(--text3)}
+.done-check{background:transparent;border:none;cursor:pointer;color:var(--text3);display:flex;align-items:center;font-size:16px}
+.done-check.done{color:var(--accent)}
+
+/* ═══════════════════════════════════════
+   FEED CALCULATOR
+═══════════════════════════════════════ */
+.calc-inputs{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:14px}
+.calc-inputs-title{font-weight:700;font-size:14px;margin-bottom:10px}
+.calc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.calc-group{display:flex;flex-direction:column;gap:4px}
+.calc-group label{font-size:11px;color:var(--text3);font-weight:600}
+.calc-totals{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.calc-total{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center}
+.calc-total-lbl{font-size:10px;color:var(--text3);font-weight:600}
+.calc-total-val{font-size:18px;font-weight:800;font-family:'Syne',sans-serif;display:block}
+.calc-total-val.accent{color:var(--accent)}
+.calc-list{display:flex;flex-direction:column;gap:8px}
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.calc-head{display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer}
+.calc-prod-name{font-weight:700;font-size:14px}
+.calc-prod-cat{font-size:12px;color:var(--text3);margin-top:2px}
+.calc-result{text-align:right}
+.calc-bags{font-size:26px;font-weight:800;font-family:'Syne',sans-serif;color:var(--accent)}
+.calc-bags span{font-size:13px;font-weight:400;color:var(--text3)}
+.calc-cost{font-size:13px;color:var(--text2)}
+.calc-detail{padding:10px 14px 14px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px}
+.calc-intake-info{font-size:12px;color:var(--blue);background:var(--bdim);padding:7px 10px;border-radius:8px}
+.calc-breakdown{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:13px;color:var(--text2)}
+.calc-price-line{font-size:13px;color:var(--text2);border-top:1px solid var(--border);padding-top:8px}
+.calc-price-line strong{color:var(--accent)}
+
+/* ═══════════════════════════════════════
+   CATTLE GUIDES EXPANDED
+═══════════════════════════════════════ */
+.dosage-section{margin-bottom:16px}
+.dosage-title{font-weight:700;font-size:14px;font-family:'Syne',sans-serif;margin-bottom:8px;color:var(--accent)}
+.dosage-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border)}
+.dosage-table{width:100%;border-collapse:collapse;min-width:280px;font-family:'DM Sans',sans-serif;font-size:13px}
+.dosage-table th{background:var(--bg3);padding:9px 12px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text3)}
+.dosage-table td{padding:9px 12px;border-bottom:1px solid var(--border)}
+.dosage-table tr:last-child td{border-bottom:none}
+.dosage-table tr:hover td{background:var(--bg3)}
+.dos-prod{font-weight:600}
+.dos-intake{color:var(--accent);font-weight:700;white-space:nowrap}
+.dos-notes{color:var(--text3)}
+.month-bar{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin-top:8px}
+@media(min-width:500px){.month-bar{grid-template-columns:repeat(12,1fr)}}
+.month-item{text-align:center;padding:6px 3px;border-radius:6px;border:2px solid;background:var(--bg3)}
+.month-name{font-size:11px;font-weight:700}
+.month-phase{font-size:8px;margin-top:2px;font-weight:600}
+
+/* ═══════════════════════════════════════
+   EXPORT
+═══════════════════════════════════════ */
+.export-list{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.export-btn{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;cursor:pointer;text-align:left;color:var(--text);font-family:'DM Sans',sans-serif;transition:border-color .15s;width:100%}
+.export-btn:hover{border-color:var(--accent)}
+.export-btn-icon{width:42px;height:42px;background:var(--adim);color:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}
+.export-btn-label{font-weight:700;font-size:14px}
+.export-btn-sub{font-size:12px;color:var(--text3);margin-top:2px}
+.export-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px}
+.exp-stat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center}
+.exp-stat-val{font-size:22px;font-weight:800;font-family:'Syne',sans-serif;color:var(--accent);display:block}
+.exp-stat-lbl{font-size:11px;color:var(--text3)}
+.backup-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.backup-info{display:flex;align-items:flex-start;gap:12px;flex:1}
+.backup-icon{font-size:28px}
+.backup-title{font-weight:700;font-size:14px}
+.backup-sub{font-size:12px;color:var(--text3);margin-top:3px}
+.import-msg{display:flex;align-items:center;gap:8px;padding:12px 14px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:12px}
+.import-ok{background:var(--adim);color:var(--accent);border:1px solid var(--accent)}
+.import-err{background:var(--rdim);color:var(--red);border:1px solid var(--red)}
+.export-note{font-size:12px;color:var(--text3);background:var(--bg3);border-radius:10px;padding:12px;line-height:1.6;margin-top:8px}
+
+/* ═══════════════════════════════════════
+   TRUCK COMPARE
+═══════════════════════════════════════ */
+.cmp-truck-list{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.cmp-truck-btn{display:flex;align-items:center;gap:12px;background:var(--card);border:2px solid var(--border);border-radius:12px;padding:12px 14px;cursor:pointer;text-align:left;transition:all .15s;color:var(--text);font-family:'DM Sans',sans-serif;width:100%}
+.cmp-truck-btn.sel{border-color:var(--accent);background:var(--adim)}
+.cmp-truck-icon{font-size:20px;color:var(--text3)}
+.cmp-truck-btn.sel .cmp-truck-icon{color:var(--accent)}
+.cmp-truck-name{font-weight:700;font-size:14px;display:block}
+.cmp-truck-meta{font-size:12px;color:var(--text3)}
+.cmp-sum-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:10px}
+.cmp-sum-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center}
+.cmp-lbl{font-size:11px;color:var(--text3);font-weight:600;margin-bottom:6px}
+.cmp-bags{font-size:28px;font-weight:800;font-family:'Syne',sans-serif;color:var(--accent)}
+.cmp-bags span{font-size:13px;font-weight:400;color:var(--text3)}
+.cmp-val{font-size:12px;color:var(--text2);margin-top:2px}
+.cmp-prods{font-size:11px;color:var(--text3);margin-top:2px}
+.cmp-grand{background:var(--adim);color:var(--accent);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:12px;text-align:center}
+.cmp-controls{display:flex;gap:8px;margin-bottom:12px;align-items:center}
+.cmp-table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
+.cmp-table{width:100%;border-collapse:collapse;min-width:320px;font-family:'DM Sans',sans-serif}
+.cmp-table th,.cmp-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.cmp-table thead th{background:var(--bg3);font-size:12px;font-weight:700}
+.cmp-th-prod{min-width:140px}
+.cmp-th-truck{text-align:center;white-space:nowrap}
+.cmp-th-total{text-align:center;color:var(--accent)}
+.cmp-td-prod{background:var(--bg2)}
+.cmp-prod-name{font-weight:600;font-size:13px}
+.cmp-prod-unit{font-size:11px;color:var(--text3)}
+.cmp-td-qty{text-align:center}
+.cmp-qty{font-size:18px;font-weight:800;font-family:'Syne',sans-serif}
+.cmp-qty.accent{color:var(--accent)}
+.cmp-sub{font-size:11px;color:var(--text3)}
+.cmp-max{background:rgba(111,207,71,.08)}
+.cmp-absent{color:var(--text3)}
+.cmp-none{font-size:20px;color:var(--border)}
+.cmp-td-total{text-align:center;background:var(--bg2)}
+.cmp-foot td{background:var(--bg3);font-size:13px;border-top:2px solid var(--border)}
+.cmp-table tbody tr:hover td{background:var(--card2)}

@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="af" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<link rel="manifest" href="manifest.json"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="LOBOL"/>
+<meta name="theme-color" content="#6fcf47"/>
+<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+<title>LOBOL – Fabriek & Boerdery App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="base.css"/>
+<link rel="stylesheet" href="extra.css"/>
+<link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet" href="weather.css"/>
+<link rel="stylesheet" href="inligting.css"/>
+<link rel="stylesheet" href="trucks.css"/>
+</head>
+<body>
+</head>
+<body>
+
+  <!-- iPhone Data Bar -->
+  <div id="iphone-data-bar" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:500;background:#1a2e1a;border-top:1px solid #2d4a2d;padding:10px 16px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));flex-direction:column;gap:8px">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <div id="last-backup-time" style="font-size:11px;color:#5a7a5a">Tik om data te stoor</div>
+      <div style="display:flex;gap:6px">
+        <button id="iphone-save-btn" onclick="downloadBackupNow()" style="background:#6fcf47;color:#0f1f0f;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">💾 Stoor Data</button>
+        <label style="background:#1e321e;color:#9db89d;border:1px solid #2d4a2d;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">
+          📤 Laai In<input type="file" accept=".json" onchange="restoreFromFile(this)" style="display:none"/>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Storage Warning -->
+  <div id="storage-warning" style="display:none;position:fixed;top:0;left:0;right:0;z-index:600;background:#4a1515;border-bottom:2px solid #e05c5c;padding:12px 16px;align-items:center;gap:10px">
+    <span style="font-size:13px;color:#e05c5c;font-weight:600">⚠️ Stoorspasie vol! Stoor data na iPhone onmiddellik.</span>
+    <button onclick="downloadBackupNow();document.getElementById('storage-warning').style.display='none'" style="background:#e05c5c;color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:12px;cursor:pointer">💾 Stoor</button>
+  </div>
+
+<div id="app">
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav id="sidebar">
+  <div class="sidebar-logo">LOBOL</div>
+  <div id="sidebar-links"></div>
+</nav>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main id="main">
+
+  <!-- DASHBOARD -->
+  <section class="page" id="page-dashboard">
+    <div class="dash-header">
+      <div>
+        <div class="dash-greeting">Goeie dag 👋</div>
+        <div class="dash-date" id="dash-date"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="dash-time" id="dash-time"></span>
+        <button class="icon-btn" onclick="toggleTheme()" title="Tema">🌙</button>
+      </div>
+    </div>
+    <div id="weather-widget"></div>
+    <div id="dash-alert"></div>
+    <div class="dash-stats" id="dash-stats"></div>
+    <div class="section-title">⚡ Vinnige Toegang</div>
+    <div class="quick-nav" id="quick-nav"></div>
+    <div id="dash-reminders-section"></div>
+    <div id="dash-minalerts-section"></div>
+    <div id="dash-sales-section"></div>
+    <div id="dash-stock-alerts-section"></div>
+    <div id="dash-all-good"></div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="page" id="page-products">
+    <div class="page-header">
+      <h1>Produkte</h1>
+      <span class="badge" id="prod-count">0</span>
+      <button class="icon-btn accent" onclick="openModal('prod-add-modal')">＋</button>
+    </div>
+    <div class="tab-row">
+      <button class="tab-btn active" id="tab-products" onclick="switchProdTab('products')">📦 Produkte</button>
+      <button class="tab-btn" id="tab-guides" onclick="switchProdTab('guides')">📖 Gids</button>
+    </div>
+    <div id="prod-products-tab">
+      <div class="eie-banner" id="eie-banner" onclick="toggleEieGeel()">
+        <div class="eie-left">
+          <div class="eie-icon">🌽</div>
+          <div><div class="eie-title">Eie Geel Afslag</div><div class="eie-sub">Lekke: −R48/sak · Voere: −R96/sak</div></div>
+        </div>
+        <div class="toggle-pill" id="eie-toggle"><div class="toggle-thumb"></div></div>
+      </div>
+      <div class="search-wrap">🔍 <input type="text" placeholder="Soek produkte..." id="prod-search" oninput="renderProducts()"/></div>
+      <div class="chips" id="prod-cats"></div>
+      <div class="prod-list" id="prod-list"></div>
+    </div>
+    <div id="prod-guides-tab" style="display:none">
+      <div class="guides-list" id="guides-list"></div>
+    </div>
+  </section>
+
+  <!-- TRUCK COUNT -->
+  <section class="page" id="page-truck">
+    <div id="truck-list-view">
+      <div class="page-header">
+        <h1>Vragmotor Tel</h1>
+        <button class="icon-btn accent" onclick="openTruckAddModal()">＋</button>
+      </div>
+      <!-- Tab: Sessions / Fleet / Drivers -->
+      <div class="tab-row">
+        <button class="tab-btn active" id="ttab-sessions" onclick="switchTruckTab('sessions')">📋 Laaisessies</button>
+        <button class="tab-btn" id="ttab-fleet" onclick="switchTruckTab('fleet')">🚛 Vloot</button>
+        <button class="tab-btn" id="ttab-drivers" onclick="switchTruckTab('drivers')">👷 Bestuurders</button>
+        <button class="tab-btn" id="ttab-history" onclick="switchTruckTab('history')">📦 Geskiedenis</button>
+      </div>
+      <div id="truck-sessions-tab">
+        <div class="truck-list" id="truck-list"></div>
+      </div>
+      <div id="truck-fleet-tab" style="display:none">
+        <button class="btn btn-primary btn-full" style="margin-bottom:12px" onclick="openModal('fleet-add-modal')">＋ Voeg Vragmotor by Vloot</button>
+        <div class="truck-fleet-list" id="fleet-list"></div>
+      </div>
+      <div id="truck-history-tab" style="display:none"></div>
+      <div id="truck-drivers-tab" style="display:none">
+        <button class="btn btn-primary btn-full" style="margin-bottom:12px" onclick="openModal('driver-add-modal')">＋ Voeg Bestuurder By</button>
+        <div class="driver-list" id="driver-list"></div>
+      </div>
+    </div>
+    <div id="truck-detail-view" style="display:none">
+      <div class="page-header">
+        <button class="icon-btn" onclick="closeTruckDetail()">✕</button>
+        <h1 id="truck-detail-name" style="flex:1"></h1>
+        <button class="icon-btn" onclick="exportTruckList()" title="Laai af">⬇</button>
+      </div>
+      <div id="truck-visual-section"></div>
+      <div class="truck-summary" id="truck-summary"></div>
+      <div id="eie-notice-truck"></div>
+      <button class="btn btn-primary btn-full" style="margin-bottom:12px" onclick="openModal('truck-item-modal')">＋ Voeg Produk By</button>
+      <div class="count-list" id="truck-items"></div>
+    </div>
+  </section>
+
+  <!-- TRUCK COMPARE -->
+  <section class="page" id="page-compare">
+    <div class="page-header"><h1>Vragmotor Vergelyking</h1><span style="font-size:22px">📊</span></div>
+    <p class="guides-intro" style="font-size:13px;color:var(--text3);margin-bottom:14px">Kies tot 4 vragmotors om langs mekaar te vergelyk.</p>
+    <div class="cmp-truck-list" id="cmp-truck-select"></div>
+    <div id="cmp-results"></div>
+  </section>
+
+  <!-- FACTORY STOCK -->
+  <section class="page" id="page-stock">
+    <div class="page-header">
+      <h1>Fabrieksvoorraad</h1>
+      <button class="icon-btn accent" onclick="openModal('stock-add-modal')">＋</button>
+    </div>
+    <div class="stats-grid" id="stock-stats"></div>
+    <div id="stock-value-banner"></div>
+    <div class="search-wrap">🔍 <input type="text" placeholder="Soek voorraad..." id="stock-search" oninput="renderStock()"/></div>
+    <div class="chips" id="stock-chips"></div>
+    <div class="stock-list" id="stock-list"></div>
+  </section>
+
+  <!-- DUTIES -->
+  <section class="page" id="page-duties">
+    <div class="page-header">
+      <h1>Werknemerstaak</h1>
+      <button class="icon-btn accent" onclick="openModal('duty-add-modal')">＋</button>
+    </div>
+    <div class="duties-prog"><div class="duties-prog-text" id="duties-prog-text"></div><div class="prog-bar"><div class="prog-fill" id="duties-prog-fill"></div></div></div>
+    <div class="chips" id="duty-chips"></div>
+    <div class="duty-list" id="duty-list"></div>
+  </section>
+
+  <!-- REMINDERS -->
+  <section class="page" id="page-reminders">
+    <div class="page-header">
+      <h1>Herinneringe</h1>
+      <span class="dash-time" id="rem-time"></span>
+      <button class="icon-btn" onclick="toggleTheme()">🌙</button>
+      <button class="icon-btn accent" onclick="openModal('rem-add-modal')">＋</button>
+    </div>
+    <div class="rem-list" id="rem-list"></div>
+  </section>
+
+  <!-- CUSTOMERS -->
+  <section class="page" id="page-customers">
+    <div class="page-header">
+      <h1>Klante</h1>
+      <span class="badge" id="cust-count">0</span>
+      <button class="icon-btn accent" onclick="openModal('cust-add-modal')">＋</button>
+    </div>
+    <div class="search-wrap">🔍 <input type="text" placeholder="Soek klant, plaas, area..." id="cust-search" oninput="renderCustomers()"/></div>
+    <div class="cust-list" id="cust-list"></div>
+  </section>
+
+  <!-- SALES -->
+  <section class="page" id="page-sales">
+    <div class="page-header">
+      <h1>Verkope</h1>
+      <span class="badge" id="sales-count">0</span>
+      <button class="icon-btn accent" onclick="openModal('sale-add-modal')">＋</button>
+    </div>
+    <div class="tab-row">
+      <button class="tab-btn active" id="tab-bestellings" onclick="switchSalesTab('bestellings')">🛒 Bestellings</button>
+      <button class="tab-btn" id="tab-prysgeskiedenis" onclick="switchSalesTab('prysgeskiedenis')">📈 Prysgeskiedenis</button>
+    </div>
+    <div id="sales-bestellings-tab">
+      <div class="sales-sum" id="sales-sum"></div>
+      <div class="search-wrap">🔍 <input type="text" placeholder="Soek bestelling..." id="sale-search" oninput="renderSales()"/></div>
+      <div class="sale-list" id="sale-list"></div>
+    </div>
+    <div id="sales-prysgeskiedenis-tab" style="display:none">
+      <div id="price-hist-list"></div>
+    </div>
+  </section>
+
+  <!-- DELIVERIES -->
+  <section class="page" id="page-deliveries">
+    <div class="page-header">
+      <h1>Aflewerings</h1>
+      <button class="icon-btn accent" onclick="openModal('deliv-add-modal')">＋</button>
+    </div>
+    <div class="chips" id="deliv-chips"></div>
+    <div class="deliv-list" id="deliv-list"></div>
+  </section>
+
+  <!-- NOTES -->
+  <section class="page" id="page-notes">
+    <div class="page-header">
+      <h1>Notas</h1>
+      <span class="badge" id="notes-count">0</span>
+      <button class="icon-btn accent" onclick="openModal('note-add-modal')">＋</button>
+    </div>
+    <div class="search-wrap">🔍 <input type="text" placeholder="Soek notas..." id="note-search" oninput="renderNotes()"/></div>
+    <div class="chips" id="note-chips"></div>
+    <div class="notes-grid" id="notes-grid"></div>
+  </section>
+
+  <!-- WORKERS -->
+  <section class="page" id="page-workers">
+    <div class="page-header">
+      <h1>Werknemers</h1>
+      <button class="icon-btn accent" onclick="openModal('worker-add-modal')">＋</button>
+    </div>
+    <div class="workers-sum" id="workers-sum"></div>
+    <div class="worker-list" id="worker-list"></div>
+  </section>
+
+  <!-- FEED CALCULATOR -->
+  <section class="page" id="page-calc">
+    <div class="page-header"><span style="font-size:22px">🧮</span><h1>Voerberekening</h1><button class="icon-btn" onclick="exportCalc()" title="Laai af">⬇</button></div>
+    <div class="calc-inputs">
+      <div class="calc-inputs-title">🐄 Kudde Instellings</div>
+      <div class="calc-grid">
+        <div class="calc-group"><label>Aantal Diere</label><input type="number" id="calc-animals" value="100" min="1" oninput="renderCalc()"/></div>
+        <div class="calc-group"><label>Gem. Gewig (kg)</label><input type="number" id="calc-weight" value="300" min="1" oninput="renderCalc()"/></div>
+        <div class="calc-group"><label>Aantal Dae</label><input type="number" id="calc-days" value="30" min="1" oninput="renderCalc()"/></div>
+      </div>
+    </div>
+    <div class="calc-totals" id="calc-totals"></div>
+    <button class="btn btn-primary btn-full" style="margin-bottom:12px" onclick="openModal('calc-pick-modal')">＋ Voeg Produk by Berekening</button>
+    <div class="calc-list" id="calc-list"></div>
+  </section>
+
+  <!-- CATTLE GUIDES -->
+  <section class="page" id="page-beesbestuur">
+    <div class="page-header"><span style="font-size:22px">📖</span><h1>Beesbestuur Gids</h1></div>
+    <div class="tab-row">
+      <button class="tab-btn active" id="tab-kalender" onclick="switchGuideTab('kalender')">📅 Kalender</button>
+      <button class="tab-btn" id="tab-ras" onclick="switchGuideTab('ras')">🐂 Rasse</button>
+      <button class="tab-btn" id="tab-dosering" onclick="switchGuideTab('dosering')">💊 Dosering</button>
+    </div>
+    <div id="guide-kalender-tab"></div>
+    <div id="guide-ras-tab" style="display:none"></div>
+    <div id="guide-dosering-tab" style="display:none"></div>
+  </section>
+
+  <!-- INLIGTING -->
+  <section class="page" id="page-inligting">
+    <div class="page-header"><h1>📚 Inligting & Gidse</h1></div>
+    <div class="info-hero">
+      <div class="info-hero-title">LOBOL Kennisbasis</div>
+      <div class="info-hero-sub">Kies 'n kategorie om meer te leer</div>
+    </div>
+    <div class="info-categories" id="info-cats"></div>
+    <div id="info-content-area"></div>
+  </section>
+
+  <!-- HEALTH & STUDY NOTES -->
+  <section class="page" id="page-health">
+    <div class="page-header"><h1>🏥 Gesondheid & Notas</h1></div>
+    <div class="tab-row">
+      <button class="tab-btn active" id="htab-gesondheid" onclick="switchHealthTab('gesondheid')">🏥 Gesondheid</button>
+      <button class="tab-btn" id="htab-notas" onclick="switchHealthTab('notas')">📝 Studie Notas</button>
+    </div>
+    <div id="health-gesondheid-tab">
+      <div class="section-title">📋 Vinnige Verwysing</div>
+      <div id="health-ref-section"></div>
+    </div>
+    <div id="health-notas-tab" style="display:none"></div>
+  </section>
+
+  <!-- KAART -->
+  <section class="page" id="page-kaart">
+    <div class="page-header">
+      <h1>🗺️ Ermelo Kaart</h1>
+    </div>
+    <div class="chips" id="map-zoom-btns" style="margin-bottom:12px"></div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:12px">
+      <div id="map-container" style="width:100%;height:600px;position:relative">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg2);z-index:1;font-size:13px;color:var(--text3)" id="map-loading">🗺️ Laai kaart...</div>
+        <iframe
+          id="ermelo-map"
+          style="width:100%;height:100%;border:none;display:block"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=24.0%2C-28.5%2C32.0%2C-24.5&layer=mapnik&marker=-26.5167%2C29.9833"
+          onload="document.getElementById('map-loading').style.display='none'">
+        </iframe>
+      </div>
+    </div>
+    <!-- Town chips for quick navigation -->
+    <div class="section-title">🏘️ Dorpe in Radius</div>
+    <div class="chips" id="map-towns" style="flex-wrap:wrap;padding-bottom:6px"></div>
+    <!-- Distance reference cards -->
+    <div class="section-title">📏 Afstande vanaf Ermelo</div>
+    <div id="map-distances"></div>
+    <!-- Notes about area -->
+    <div class="card" style="margin-top:12px">
+      <div style="font-weight:700;font-size:14px;margin-bottom:8px">📍 Ermelo Koördinate</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.8">
+        <div>Latitude: -26.5167° S</div>
+        <div>Longitude: 29.9833° O</div>
+        <div>Provinsie: Mpumalanga</div>
+        <div>Munisipaliteit: Mkhondo</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLASHCARDS -->
+  <section class="page" id="page-flashcards">
+  </section>
+
+  <!-- EXPORT -->
+  <section class="page" id="page-export">
+    <div class="page-header"><h1>Uitvoer & Rugsteun</h1></div>
+    <div id="iphone-export-section"></div>
+    <div class="export-stats" id="export-stats"></div>
+    <div class="section-title">📊 Uitvoer na Excel / CSV</div>
+    <div class="export-list" id="export-list"></div>
+    <div class="section-title">💾 Volledige JSON Rugsteun</div>
+    <div class="backup-card">
+      <div class="backup-info"><div class="backup-icon">💾</div><div><div class="backup-title">Stoor alle data</div><div class="backup-sub">Produkte, voorraad, verkope, klante — alles in een lêer.</div></div></div>
+      <button class="btn btn-primary" onclick="exportFullBackup()">⬇ Stoor Rugsteun</button>
+    </div>
+    <div class="section-title">📤 Herstel Rugsteun</div>
+    <div class="backup-card" style="border-color:var(--odim)">
+      <div class="backup-info"><div class="backup-icon">⚠️</div><div><div class="backup-title">Laai Rugsteun In</div><div class="backup-sub">⚠️ Dit sal alle huidige data vervang.</div></div></div>
+      <label class="btn btn-primary" style="cursor:pointer">📤 Kies Lêer<input type="file" accept=".json" onchange="importBackup(event)" style="display:none"/></label>
+    </div>
+    <div id="import-msg"></div>
+    <div class="export-note">💡 CSV lêers kan direk in Microsoft Excel of Google Sheets oopgemaak word.</div>
+  </section>
+
+</main>
+
+<!-- ═══ MOBILE NAV ═══ -->
+<div id="mobile-nav">
+  <div class="mob-nav-inner" id="mob-nav-inner"></div>
+</div>
+<div id="mobile-menu" onclick="closeMobileMenu()">
+  <div class="mob-menu-sheet" onclick="event.stopPropagation()">
+    <div class="mob-menu-head">
+      <span class="mob-menu-title">🌽 LOBOL App</span>
+      <button class="icon-btn" onclick="closeMobileMenu()">✕</button>
+    </div>
+    <div class="mob-menu-grid" id="mob-menu-grid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MODALS
+═══════════════════════════════════════ -->
+
+<!-- Product Add -->
+<div class="modal-bg" id="prod-add-modal" onclick="closeModal('prod-add-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>Voeg Produk By</h3>
+  <input placeholder="Produknaam" id="pa-name"/>
+  <select id="pa-cat"></select>
+  <input type="number" placeholder="Prys per 50kg sak (R)" id="pa-price"/>
+  <input type="number" placeholder="Prys per ton (R)" id="pa-perton"/>
+  <input placeholder="Eenheid (bv. 50kg sak)" id="pa-unit" value="50kg sak"/>
+  <textarea rows="2" placeholder="Beskrywing..." id="pa-desc"></textarea>
+  <input placeholder="Gebruik (bv. Droë Beeste – Winter)" id="pa-use"/>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('prod-add-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="addProduct()">Voeg By</button>
+  </div>
+</div></div>
+
+<!-- Truck Add -->
+<div class="modal-bg" id="truck-add-modal" onclick="closeModal('truck-add-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>Nuwe Laaisessie</h3>
+  <input placeholder="Sessie naam (bv. Maandag Rit)" id="ta-name"/>
+  <label class="field-label">Kies Bestuurder</label>
+  <select id="ta-driver">
+    <option value="">-- Kies bestuurder --</option>
+  </select>
+  <label class="field-label">Koppel aan Vloot Vragmotor (vir kapasiteit)</label>
+  <select id="ta-fleet" onchange="updateTruckCapPreview()">
+    <option value="">-- Kies vragmotor (opsioneel) --</option>
+  </select>
+  <div id="ta-cap-preview" style="display:none;background:var(--adim);color:var(--accent);border-radius:8px;padding:8px 12px;font-size:13px;font-weight:600"></div>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('truck-add-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="addTruck()">Skep Sessie</button>
+  </div>
+</div></div>
+
+<!-- Truck Item -->
+<div class="modal-bg" id="truck-item-modal" onclick="closeModal('truck-item-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>Voeg by Vragmotor</h3>
+  <div class="search-wrap">🔍 <input type="text" placeholder="Soek produk..." id="ti-search" oninput="renderTruckPicker()"/></div>
+  <div class="picker-list" id="ti-picker"></div>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('truck-item-modal')">Sluit</button>
+  </div>
+</div></div>
+
+<!-- Stock Add -->
+<div class="modal-bg" id="stock-add-modal" onclick="closeModal('stock-add-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>Voeg Voorraad By</h3>
+  <div class="search-wrap">🔍 <input type="text" placeholder="Soek produk..." id="sa-prod-search" oninput="renderStockPicker()"/></div>
+  <div class="picker-list" id="sa-picker"></div>
+  <input type="number" placeholder="Hoeveelheid (sakke)" id="sa-qty"/>
+  <input type="number" placeholder="Prys per eenheid (outomaties gevul)" id="sa-price"/>
+  <input type="number" placeholder="Min vlak vir waarskuwing (opsioneel)" id="sa-min"/>
+  <input type="number" placeholder="Maks kapasiteit vir %balk (opsioneel)" id="sa-max"/>
+  <select id="sa-status">
+    <option>Goed</option><option>Lae Voorraad</option><option>Naby Verval</option><option>Verval</option>
+  </select>
+  <label class="field-label">Vervaldatum (opsioneel)</label>
+  <select id="sa-expiry-mode" onchange="toggleExpiryDate()">
+    <option value="none">Geen vervaldatum</option>
+    <option value="dated">Spesifieke datum</option>
+    <option value="expired">Reeds verval (geen datum)</option>
+  </select>
+  <div id="sa-expiry-date-row" style="display:none">
+    <input type="date" id="sa-expiry-date"/>
+  </div>
+  <textarea rows="2" placeholder="Notas..." id="sa-notes"></textarea>
+  <input type="hidden" id="sa-prod-id"/>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('stock-add-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="addStockItem()">Voeg By</button>
+  </div>
+</div></div>
+
+<!-- Duty Add -->
+<div class="modal-bg" id="duty-add-modal" onclick="closeModal('duty-add-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>Voeg Taak By</h3>
+  <input placeholder="Taaknaam..." id="da-title"/>
+  <select id="da-cat">
+    <option>Skoonmaak</option><option>Voorraad</option><option>Instandhouding</option><option>Veiligheid</option><option>Admin</option><option>Ander</option>
+  </select>
+  <select id="da-pri">
+    <option value="low">Laag Prioriteit</option><option value="medium" selected>Medium Prioriteit</option><option value="high">Hoog Prioriteit</option>
+  </select>
+  <textarea rows="2" placeholder="Instruksies / notas..." id="da-notes"></textarea>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('duty-add-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="addDuty()">Voeg By</button>
+  </div>
+</div></div>
+
+<!-- Reminder Add -->
+<div class="modal-bg" id="rem-add-modal" onclick="closeModal('rem-add-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>Nuwe Herinnering</h3>
+  <input placeholder="Taaknaam..." id="ra-title"/>
+  <label class="field-label">Tyd</label>
+  <input type="time" id="ra-time" value="18:00"/>
+  <label class="field-label">Herhaal op dae</label>
+  <div class="days-grid" id="ra-days"></div>
+  <textarea rows="2" placeholder="Notas..." id="ra-notes"></textarea>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('rem-add-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="addReminder()">Voeg By</button>
+  </div>
+</div></div>
+
+<!-- Customer Add -->
+<div class="modal-bg" id="cust-add-modal" onclick="closeModal('cust-add-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>Voeg Klant By</h3>
+  <input placeholder="Volle naam" id="ca-name"/>
+  <input placeholder="Plaasnaam" id="ca-farm"/>
+  <input type="tel" placeholder="Telefoonnommer" id="ca-phone"/>
+  <input placeholder="Omgewing / Dorp" id="ca-area"/>
+  <label class="field-label">Afstand vanaf fabriek (km)</label>
+  <input type="number" placeholder="Bv. 45" id="ca-distance" min="0"/>
+  <select id="ca-type">
+    <option>Beeste</option><option>Skape & Bokke</option><option>Pluimvee</option><option>Beeste & Skape</option><option>Vark</option><option>Wild</option><option>Perd</option><option>Gemengd</option>
+  </select>
+  <textarea rows="2" placeholder="Notas (voorkeure, ens.)" id="ca-notes"></textarea>
+  <div class="toggle-row" onclick="toggleNewCustEieGeel()">
+    <div><div class="toggle-label">🌽 Eie Geel Klant</div><div class="toggle-sub">Kry −R48/sak afslag</div></div>
+    <div class="toggle-pill" id="ca-eiegeel-toggle"><div class="toggle-thumb"></div></div>
+  </div>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('cust-add-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="addCustomer()">Voeg By</button>
+  </div>
+</div></div>
+
+<!-- Sale Add -->
+<div class="modal-bg" id="sale-add-modal" onclick="closeModal('sale-add-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>Nuwe Bestelling</h3>
+  <select id="sla-cust" onchange="onSaleCustomerChange()">
+    <option value="">-- Kies klant --</option>
+  </select>
+  <div id="sla-eie-notice"></div>
+  <button class="btn btn-secondary btn-sm" onclick="openSaleProdPicker()" style="width:auto">＋ Voeg produk by</button>
+  <div id="sla-items"></div>
+  <div id="sla-total" style="display:none"></div>
+  <select id="sla-status"><option>Hangende</option><option>Betaal</option><option>Gekanselleer</option></select>
+  <textarea rows="2" placeholder="Notas..." id="sla-notes"></textarea>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('sale-add-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="saveSale()">Stoor</button>
+  </div>
+</div></div>
+
+<!-- Sale Product Picker -->
+<div class="modal-bg" id="sale-prod-modal" onclick="closeModal('sale-prod-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>Kies Produk</h3>
+  <div class="search-wrap">🔍 <input type="text" placeholder="Soek..." id="sp-search" oninput="renderSalePicker()"/></div>
+  <div class="picker-list" id="sp-picker"></div>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('sale-prod-modal')">Sluit</button>
+  </div>
+</div></div>
+
+<!-- Health Record Add -->
+<div class="modal-bg" id="health-add-modal" onclick="closeModal('health-add-modal')">
+<div class="modal tall" onclick="event.stopPropagation()">
+  <h3>🏥 Voeg Gesondheidsrekord By</h3>
+  <input placeholder="Beskrywing (bv. Dosering teen koksidiose)" id="hr-title"/>
+  <select id="hr-type">
+    <option>Behandeling</option><option>Entstof</option><option>Dosering</option>
+    <option>Siekte</option><option>Besering</option><option>Ander</option>
+  </select>
+  <select id="hr-animal">
+    <option>Beeste</option><option>Skape</option><option>Bulle</option>
+    <option>Kalwers</option><option>Lammers</option><option>Melkbeeste</option>
+    <option>Pluimvee</option><option>Ander</option>
+  </select>
+  <input type="number" placeholder="Aantal diere betrokke" id="hr-count"/>
+  <input placeholder="Produk gebruik (bv. Vecoxan, Dectomax)" id="hr-product"/>
+  <input placeholder="Dosis (bv. 1cc/10kg)" id="hr-dosage"/>
+  <label class="field-label">Datum</label>
+  <input type="date" id="hr-date"/>
+  <input placeholder="Volgende behandelingsdatum (opsioneel)" id="hr-next"/>
+  <textarea rows="2" placeholder="Notas..." id="hr-notes"></textarea>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('health-add-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="addHealthRecord()">Stoor</button>
+  </div>
+</div></div>
+
+<!-- Study Note Add -->
+<div class="modal-bg" id="study-note-modal" onclick="closeModal('study-note-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>📝 Nuwe Studie Nota</h3>
+  <input placeholder="Opskrif (opsioneel)" id="sn-title"/>
+  <textarea rows="6" placeholder="Skryf wat jy geleer het hier neer..." id="sn-body"></textarea>
+  <select id="sn-tag">
+    <option>Algemeen</option><option>Beeste</option><option>Skape</option>
+    <option>Melkbeeste</option><option>Bulle</option><option>Voerkraal</option>
+    <option>Gesondheid</option><option>Voeding</option><option>Bestuur</option>
+  </select>
+  <label class="field-label">Kleur</label>
+  <div style="display:flex;gap:8px;padding:4px 0">
+    <select id="sn-color">
+      <option value="default">Standaard</option>
+      <option value="green">Groen</option>
+      <option value="blue">Blou</option>
+      <option value="orange">Oranje</option>
+      <option value="red">Rooi</option>
+    </select>
+  </div>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('study-note-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="addStudyNote()">Stoor Nota</button>
+  </div>
+</div></div>
+
+
+<!-- Fleet Add -->
+<div class="modal-bg" id="fleet-add-modal" onclick="closeModal('fleet-add-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>🚛 Voeg Vragmotor by Vloot</h3>
+  <label class="field-label">Ikoon</label>
+  <select id="fa-emoji">
+    <option value="🚛">🚛 Vragmotor</option>
+    <option value="🚚">🚚 Klein Vragmotor</option>
+    <option value="🏗️">🏗️ Swaar Vragmotor</option>
+    <option value="🚐">🚐 Bakkie</option>
+  </select>
+  <input placeholder="Naam (bv. Vragmotor 1 / ABC 123 GP)" id="fa-name"/>
+  <label class="field-label">Vragmotor kapasiteit (aantal 50kg sakke)</label>
+  <input type="number" placeholder="Bv. 600" id="fa-truck-cap" min="0"/>
+  <div style="display:flex;align-items:center;gap:10px;background:var(--bg3);border-radius:8px;padding:10px 14px;cursor:pointer" onclick="document.getElementById('fa-has-trailer').click()">
+    <input type="checkbox" id="fa-has-trailer" onchange="toggleTrailerField()" style="width:auto"/>
+    <label style="cursor:pointer;font-weight:600">Het hierdie vragmotor 'n sleepwa?</label>
+  </div>
+  <div id="fa-trailer-row" style="display:none">
+    <label class="field-label">Sleepwa kapasiteit (aantal 50kg sakke)</label>
+    <input type="number" placeholder="Bv. 200" id="fa-trailer-cap" min="0"/>
+  </div>
+  <textarea rows="2" placeholder="Notas (lisensieplaatjie, spesiale instruksies...)" id="fa-notes"></textarea>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('fleet-add-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="addFleet()">Voeg By</button>
+  </div>
+</div></div>
+
+<!-- Driver Add -->
+<div class="modal-bg" id="driver-add-modal" onclick="closeModal('driver-add-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>👷 Voeg Bestuurder By</h3>
+  <input placeholder="Volle naam" id="da2-name"/>
+  <input type="tel" placeholder="Telefoonnommer" id="da2-phone"/>
+  <label class="field-label">Lisensiekode</label>
+  <select id="da2-license">
+    <option value="EC">EC – Swaar Voertuig met Sleepwa</option>
+    <option value="C">C – Swaar Voertuig (sonder sleepwa)</option>
+    <option value="EB">EB – Ligte Voertuig</option>
+    <option value="B">B – Bakkie</option>
+  </select>
+  <textarea rows="2" placeholder="Notas..." id="da2-notes"></textarea>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('driver-add-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="addDriver()">Voeg By</button>
+  </div>
+</div></div>
+
+<!-- Delivery Add -->
+<div class="modal-bg" id="deliv-add-modal" onclick="closeModal('deliv-add-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>Nuwe Aflewering</h3>
+  <input placeholder="Vragmotor naam / nommer" id="dla-truck" list="dla-truck-list"/>
+  <datalist id="dla-truck-list"></datalist>
+  <input placeholder="Bestuurder se naam" id="dla-driver"/>
+  <input type="date" id="dla-date"/>
+  <label class="field-label">Voeg stopsels by</label>
+  <div style="display:flex;gap:6px">
+    <select id="dla-stop-cust" style="flex:1"><option value="">-- Kies klant --</option></select>
+    <button class="btn btn-primary btn-sm" onclick="addDelivStop()" style="white-space:nowrap">＋</button>
+  </div>
+  <input placeholder="Stopsel notas (opsioneel)" id="dla-stop-notes"/>
+  <div id="dla-stops"></div>
+  <textarea rows="2" placeholder="Algemene notas..." id="dla-notes"></textarea>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('deliv-add-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="saveDelivery()">Stoor Roete</button>
+  </div>
+</div></div>
+
+<!-- Note Add -->
+<div class="modal-bg" id="note-add-modal" onclick="closeModal('note-add-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>Nuwe Nota</h3>
+  <input placeholder="Opskrif (opsioneel)" id="na-title"/>
+  <textarea rows="5" placeholder="Skryf jou nota hier..." id="na-body"></textarea>
+  <select id="na-type"><option>Algemeen</option><option>Klant</option><option>Voorraad</option><option>Vragmotor</option><option>Dringend</option></select>
+  <select id="na-cust"><option value="">-- Koppel aan klant (opsioneel) --</option></select>
+  <label class="field-label">Kleur</label>
+  <div class="color-picker-row" id="na-colors"></div>
+  <div class="toggle-row" onclick="toggleNotePin()">
+    <span class="toggle-label">📌 Vaspen boaan</span>
+    <div class="toggle-pill" id="na-pin-toggle"><div class="toggle-thumb"></div></div>
+  </div>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('note-add-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="addNote()">Stoor Nota</button>
+  </div>
+</div></div>
+
+<!-- Assign Duty Modal -->
+<div class="modal-bg" id="assign-duty-modal" onclick="closeModal('assign-duty-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>👤 Ken Werkers Toe</h3>
+  <div id="assign-duty-title" style="font-size:13px;color:var(--accent);font-weight:600;margin-bottom:4px"></div>
+  <p style="font-size:12px;color:var(--text3);margin-bottom:10px">Kies watter werknemers hierdie taak moet doen</p>
+  <div id="assign-worker-list" style="display:flex;flex-direction:column;gap:6px"></div>
+  <div class="modal-actions" style="margin-top:10px">
+    <button class="btn btn-primary btn-full" onclick="closeModal('assign-duty-modal');renderDuties()">Stoor</button>
+  </div>
+</div></div>
+
+<!-- Group Add Modal -->
+<div class="modal-bg" id="group-add-modal" onclick="closeModal('group-add-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>👥 Skep Nuwe Groep</h3>
+  <input placeholder="Groepnaam (bv. Laaiers, Skoonmakers)" id="ga-name"/>
+  <label class="field-label">Kies Lede</label>
+  <div id="ga-members" style="display:flex;flex-direction:column;gap:6px"></div>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('group-add-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="addGroup()">Skep Groep</button>
+  </div>
+</div></div>
+
+<!-- Worker Add -->
+<div class="modal-bg" id="worker-add-modal" onclick="closeModal('worker-add-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>Voeg Werknemer By</h3>
+  <input placeholder="Volle naam" id="wa-name"/>
+  <select id="wa-role"><option>Pakhuiswerker</option><option>Vragmotorbestuurder</option><option>Vloer Toesighouer</option><option>Laaier</option><option>Skoonmaker</option><option>Admin</option><option>Ander</option></select>
+  <input type="tel" placeholder="Telefoonnommer" id="wa-phone"/>
+  <textarea rows="2" placeholder="Notas..." id="wa-notes"></textarea>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('worker-add-modal')">Kanselleer</button>
+    <button class="btn btn-primary" onclick="addWorker()">Voeg By</button>
+  </div>
+</div></div>
+
+<!-- Calc Product Picker -->
+<div class="modal-bg" id="calc-pick-modal" onclick="closeModal('calc-pick-modal')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>Kies Produk</h3>
+  <div class="search-wrap">🔍 <input type="text" placeholder="Soek produk..." id="cp-search" oninput="renderCalcPicker()"/></div>
+  <div class="picker-list" id="cp-picker"></div>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" onclick="closeModal('calc-pick-modal')">Sluit</button>
+  </div>
+</div></div>
+
+</div><!-- end #app -->
+<script src="storage.js"></script>
+<script src="data.js"></script>
+<script src="nav.js"></script>
+<script src="dashboard.js"></script>
+<script src="products.js"></script>
+<script src="trucks.js"></script>
+<script src="stock.js"></script>
+<script src="duties.js"></script>
+<script src="reminders.js"></script>
+<script src="customers.js"></script>
+<script src="sales.js"></script>
+<script src="deliveries.js"></script>
+<script src="notes.js"></script>
+<script src="workers.js"></script>
+<script src="calc.js"></script>
+<script src="guides.js"></script>
+<script src="export.js"></script>
+<script src="health.js"></script>
+<script src="inligting.js"></script>
+<script src="kaart.js"></script>
+<script src="flashcards.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(r => console.log('LOBOL SW registered'))
+      .catch(e => console.log('SW error:', e));
+  });
+}
+</script>
+
+<script>
+// Show iPhone data bar only on mobile
+window.addEventListener('DOMContentLoaded', () => {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isMobile = window.innerWidth < 768;
+  const bar = document.getElementById('iphone-data-bar');
+  if ((isIOS || isMobile) && bar) bar.style.display = 'flex';
+  
+  // Check for lost data
+  if (typeof checkDataIntegrity === 'function') checkDataIntegrity();
+});
+
+// Hook into save() to trigger auto-backup
+const _origSave = typeof save !== 'undefined' ? save : null;
+</script>
+</body>
+</html>

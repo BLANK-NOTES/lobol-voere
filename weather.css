@@ -1,0 +1,44 @@
+/* ═══ WEATHER WIDGET ═══ */
+.weather-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:14px}
+.weather-header{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 14px 10px}
+.weather-loc-row{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px;margin-bottom:6px}
+.weather-temp-main{font-size:52px;font-weight:800;font-family:'Syne',sans-serif;line-height:1;letter-spacing:-2px}
+.weather-feels{font-size:12px;color:var(--text3);margin-top:2px}
+.weather-cond{font-size:15px;font-weight:600;color:var(--text2);margin-top:4px}
+.weather-emoji-big{font-size:56px;line-height:1;text-align:right}
+.weather-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.wstat{background:var(--card);padding:10px 6px;text-align:center}
+.wstat-val{font-size:14px;font-weight:700;display:block;font-family:'Syne',sans-serif}
+.wstat-lbl{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.weather-hourly{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border)}
+.weather-hourly::-webkit-scrollbar{display:none}
+.whour{flex-shrink:0;width:60px;padding:10px 4px;text-align:center;border-right:1px solid var(--border)}
+.whour:last-child{border-right:none}
+.whour-time{font-size:10px;color:var(--text3);font-weight:600}
+.whour-emoji{font-size:16px;margin:4px 0}
+.whour-temp{font-size:13px;font-weight:700}
+.whour-rain{font-size:9px;color:var(--blue);margin-top:2px}
+.whour.now{background:var(--adim)}
+.weather-fc{display:grid;grid-template-columns:repeat(7,1fr);gap:0;border-bottom:1px solid var(--border)}
+@media(max-width:400px){.weather-fc{grid-template-columns:repeat(4,1fr)}}
+.wday{text-align:center;padding:10px 4px;border-right:1px solid var(--border)}
+.wday:last-child{border-right:none}
+.wday-name{font-size:10px;color:var(--text3);font-weight:700;margin-bottom:3px;text-transform:uppercase;letter-spacing:.3px}
+.wday-emoji{font-size:16px;margin-bottom:4px}
+.wday-range{display:flex;justify-content:center;gap:3px;font-size:11px;font-weight:700}
+.wmax{color:var(--red)}.wmin{color:var(--text3)}
+.wday-rain{font-size:9px;color:var(--blue);margin-top:2px}
+.wday-uv{font-size:9px;color:var(--orange);margin-top:1px}
+.wday-today{background:var(--adim)}
+.weather-alerts{padding:8px 14px;display:flex;flex-direction:column;gap:4px}
+.walert{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;padding:6px 10px;border-radius:8px}
+.walert.frost{background:var(--bdim);color:var(--blue)}
+.walert.rain{background:rgba(92,168,224,.12);color:var(--blue)}
+.walert.heat{background:var(--rdim);color:var(--red)}
+.walert.wind{background:var(--odim);color:var(--orange)}
+.walert.good{background:var(--adim);color:var(--accent)}
+.weather-footer{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-top:1px solid var(--border)}
+.weather-sun{font-size:11px;color:var(--text3);display:flex;gap:12px}
+.weather-updated{font-size:10px;color:var(--text3)}
+.weather-loc-btn{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text2);cursor:pointer;font-family:'DM Sans',sans-serif}
+.weather-loading{padding:20px;text-align:center;color:var(--text3);font-size:13px}
